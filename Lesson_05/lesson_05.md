@@ -3,7 +3,7 @@
 
 ### Prerequisites
 Before starting, replace pect in all commands and paths with your own username:
-- **Project ID: Change cas-daeng-2024-pect to cas-daeng-2024-yourusername**
+- **Project ID: Change cas-daeng-2025-pect to cas-daeng-2025-yourusername**
 - **Bucket name: Change retail-data-pect to retail-data-yourusername**
 - CSV files: customers.csv, products.csv
 - Transactions table already created via Dataflow
@@ -11,7 +11,7 @@ Before starting, replace pect in all commands and paths with your own username:
 ### 1. Creating a Dataset
 
 1. Open BigQuery Console
-2. Click on your project `cas-daeng-2024-pect`
+2. Click on your project `cas-daeng-2025-pect`
 3. Click "Create Dataset"
 4. Fill in the details:
    - Dataset ID: `ecommerce`
@@ -27,7 +27,7 @@ Before starting, replace pect in all commands and paths with your own username:
    - Create table from: `Google Cloud Storage`
    - Source path: `gs://retail-data-pect/customers.csv`
 4. Configure destination:
-   - Project: `cas-daeng-2024-pect`
+   - Project: `cas-daeng-2025-pect`
    - Dataset: `ecommerce`
    - Table name: `customers`
 5. Configure schema:
@@ -43,13 +43,13 @@ Before starting, replace pect in all commands and paths with your own username:
 Verify customers data:
 ```sql
 -- Check the data
-SELECT * FROM `cas-daeng-2024-pect.ecommerce.customers` LIMIT 5;
+SELECT * FROM `cas-daeng-2025-pect.ecommerce.customers` LIMIT 5;
 
 -- Count customers by segment
 SELECT 
   segment, 
   COUNT(*) as count 
-FROM `cas-daeng-2024-pect.ecommerce.customers`
+FROM `cas-daeng-2025-pect.ecommerce.customers`
 GROUP BY segment
 ORDER BY count DESC;
 ```
@@ -60,7 +60,7 @@ Copy and run these SQL commands:
 
 ```sql
 -- Create products table
-CREATE OR REPLACE TABLE `cas-daeng-2024-pect.ecommerce.products` (
+CREATE OR REPLACE TABLE `cas-daeng-2025-pect.ecommerce.products` (
   product_id INT64,
   name STRING,
   category STRING,
@@ -70,7 +70,7 @@ CREATE OR REPLACE TABLE `cas-daeng-2024-pect.ecommerce.products` (
 );
 
 -- Load data
-LOAD DATA INTO `cas-daeng-2024-pect.ecommerce.products`
+LOAD DATA INTO `cas-daeng-2025-pect.ecommerce.products`
 FROM FILES (
   format = 'CSV',
   uris = ['gs://retail-data-pect/products.csv'],
@@ -78,7 +78,7 @@ FROM FILES (
 );
 
 -- Verify the data
-SELECT * FROM `cas-daeng-2024-pect.ecommerce.products` LIMIT 5;
+SELECT * FROM `cas-daeng-2025-pect.ecommerce.products` LIMIT 5;
 ```
 
 ### 4. Basic Analysis Queries
@@ -91,7 +91,7 @@ SELECT
   category,
   COUNT(*) as product_count,
   ROUND(AVG(price), 2) as avg_price
-FROM `cas-daeng-2024-pect.ecommerce.products`
+FROM `cas-daeng-2025-pect.ecommerce.products`
 GROUP BY category
 ORDER BY product_count DESC;
 
@@ -101,8 +101,8 @@ SELECT
   p.category,
   COUNT(*) as times_sold,
   ROUND(SUM(t.total_amount), 2) as total_revenue
-FROM `cas-daeng-2024-pect.ecommerce.transactions` t
-JOIN `cas-daeng-2024-pect.ecommerce.products` p 
+FROM `cas-daeng-2025-pect.ecommerce.transactions` t
+JOIN `cas-daeng-2025-pect.ecommerce.products` p 
   ON t.product_id = p.product_id
 GROUP BY p.name, p.category
 ORDER BY times_sold DESC
@@ -113,8 +113,8 @@ SELECT
   c.segment,
   COUNT(DISTINCT c.customer_id) as number_of_customers,
   ROUND(AVG(t.total_amount), 2) as average_purchase_amount
-FROM `cas-daeng-2024-pect.ecommerce.customers` c
-JOIN `cas-daeng-2024-pect.ecommerce.transactions` t 
+FROM `cas-daeng-2025-pect.ecommerce.customers` c
+JOIN `cas-daeng-2025-pect.ecommerce.transactions` t 
   ON c.customer_id = t.customer_id
 GROUP BY c.segment
 ORDER BY average_purchase_amount DESC;
@@ -131,8 +131,8 @@ SELECT
   p.price,
   COUNT(t.transaction_id) as number_of_sales,
   ROUND(SUM(t.total_amount), 2) as total_revenue
-FROM `cas-daeng-2024-pect.ecommerce.products` p
-LEFT JOIN `cas-daeng-2024-pect.ecommerce.transactions` t 
+FROM `cas-daeng-2025-pect.ecommerce.products` p
+LEFT JOIN `cas-daeng-2025-pect.ecommerce.transactions` t 
   ON p.product_id = t.product_id
 WHERE p.category = 'Electronics'  -- Try different categories
 GROUP BY p.name, p.price

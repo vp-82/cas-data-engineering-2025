@@ -15,7 +15,7 @@ CSV Files       Pipeline       Results
 
 ### Prerequisites
 - Google Cloud Console access
-- Your project ID (cas-daeng-2024-YOUR_USERNAME)
+- Your project ID (cas-daeng-2025-YOUR_USERNAME)
 - Completed previous tutorial where we loaded data into Cloud Storage
 - The `ecommerce_pipeline.py` file from your course materials
 
@@ -29,7 +29,7 @@ CSV Files       Pipeline       Results
    gcloud config get-value project
    
    # If needed, set your project (replace YOUR_USERNAME)
-   gcloud config set project cas-daeng-2024-YOUR_USERNAME
+   gcloud config set project cas-daeng-2025-YOUR_USERNAME
    ```
 
 3. Install Apache Beam with GCP support
@@ -52,7 +52,7 @@ CSV Files       Pipeline       Results
    bq mk --dataset \
        --description "E-commerce analytics dataset" \
        --location US \
-       cas-daeng-2024-YOUR_USERNAME:ecommerce
+       cas-daeng-2025-YOUR_USERNAME:ecommerce
    ```
 
 6. Upload the pipeline code
@@ -83,7 +83,7 @@ CSV Files       Pipeline       Results
 
 Once the pipeline completes, analyze your data in BigQuery:
 - Go to Navigation menu → BigQuery
-- Find your project (cas-daeng-2024-YOUR_USERNAME)
+- Find your project (cas-daeng-2025-YOUR_USERNAME)
 - Look for the 'ecommerce' dataset
 - Find the 'transactions' table
 
@@ -96,7 +96,7 @@ Try these initial analysis queries:
      COUNT(*) as number_of_sales,
      ROUND(SUM(total_amount), 2) as total_sales,
      ROUND(AVG(total_amount), 2) as avg_transaction_value
-   FROM `cas-daeng-2024-YOUR_USERNAME.ecommerce.transactions`
+   FROM `cas-daeng-2025-YOUR_USERNAME.ecommerce.transactions`
    GROUP BY category
    ORDER BY total_sales DESC;
    ```
@@ -108,7 +108,7 @@ Try these initial analysis queries:
      COUNT(*) as number_of_transactions,
      SUM(quantity) as total_items_bought,
      ROUND(SUM(total_amount), 2) as total_spent
-   FROM `cas-daeng-2024-YOUR_USERNAME.ecommerce.transactions`
+   FROM `cas-daeng-2025-YOUR_USERNAME.ecommerce.transactions`
    GROUP BY customer_id
    ORDER BY total_spent DESC
    LIMIT 10;

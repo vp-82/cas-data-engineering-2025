@@ -38,7 +38,7 @@ Note: Look for the Compute Engine default service account, you'll need this for 
 ### 2. Create Cloud Composer Environment
 ```bash
 # Set your project
-gcloud config set project cas-daeng-2024-pect
+gcloud config set project cas-daeng-2025-pect
 
 # Create Cloud Composer environment (replace SERVICE-ACCOUNT with your account)
 gcloud composer environments create customer-analysis \
@@ -110,7 +110,7 @@ SELECT
     days_since_last_visit, 
     support_tickets, 
     churn_risk 
-FROM `cas-daeng-2024-pect.ecommerce.customer_risk_analysis`
+FROM `cas-daeng-2025-pect.ecommerce.customer_risk_analysis`
 ORDER BY churn_risk DESC 
 LIMIT 5;
 ```
